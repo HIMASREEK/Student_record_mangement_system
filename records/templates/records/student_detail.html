@@ -1,0 +1,79 @@
+{% extends 'records/base.html' %}
+
+{% block title %}Student Detail{% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <h2>👤 Student Profile</h2>
+
+    <div class="detail-card">
+        <h3>{{ student.name }}</h3>
+        <p><strong>Roll Number:</strong> {{ student.roll_number }}</p>
+        <p><strong>Email:</strong> {{ student.email }}</p>
+        <p><strong>Age:</strong> {{ student.age }}</p>
+        <p><strong>Joined Date:</strong> {{ student.joined_date }}</p>
+        <p><strong>Course:</strong> {{ student.course.name }}</p>
+    </div>
+</div>
+
+<div class="card">
+    <h2>📝 Marks Details</h2>
+
+    {% if marks %}
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mark in marks %}
+                    <tr>
+                        <td>{{ mark.subject }}</td>
+                        <td>{{ mark.score }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <h3>No marks added yet</h3>
+            <p>Add marks for this student to see academic performance.</p>
+        </div>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h2>📊 Result Summary</h2>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>Total Marks</h3>
+            <p>{{ total_marks }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Average</h3>
+            <p>{{ average_marks }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Grade</h3>
+            <p>{{ grade }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Status</h3>
+            <p>{{ status }}</p>
+        </div>
+    </div>
+
+    <div class="actions" style="margin-top: 20px;">
+        <a href="{% url 'edit_student' student.pk %}" class="btn btn-secondary">Edit</a>
+        <a href="{% url 'delete_student' student.pk %}" class="btn btn-danger">Delete</a>
+        <a href="{% url 'student_list' %}" class="btn">Back</a>
+    </div>
+</div>
+
+{% endblock %}
